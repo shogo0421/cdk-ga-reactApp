@@ -1,5 +1,9 @@
 name: GitHub Actions Demo
 on: [push]
+
+env:
+  AWS_ROLE_ARN: arn:aws:iam::265210403860:role/githubActions-exam-role
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -8,9 +12,9 @@ jobs:
       contents: read
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@b8c74de753fbcb4868bf2011fb2e15826ce973af
+        uses: aws-actions/configure-aws-credentials@master
         with:
           aws-region: ap-northeast-1
-          role-to-assume: arn:aws:iam::265210403860:role/githubActions-exam-role
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-session-name: MySessionName
       - run: aws sts get-caller-identity
